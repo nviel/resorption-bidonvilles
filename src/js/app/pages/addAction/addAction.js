@@ -1,13 +1,16 @@
 import NavBar from '#app/layouts/navbar/navbar.vue';
+import Autocomplete from '#app/components/autocomplete/autocomplete.vue';
 import { get } from '#helpers/api/config';
 import Datepicker from 'vuejs-datepicker';
 import { fr } from 'vuejs-datepicker/dist/locale';
 import { add } from '#helpers/api/action';
+import { searchOperator } from '#helpers/api/operator';
 
 export default {
     components: {
         NavBar,
         Datepicker,
+        Autocomplete,
     },
     data() {
         return {
@@ -28,6 +31,8 @@ export default {
             ],
             error: null,
             fieldErrors: {},
+            operatorQuery: null,
+            operators: [],
         };
     },
     computed: {
@@ -57,6 +62,7 @@ export default {
                 started_at: this.startedAt,
                 territory_type: this.territoryType,
                 territory_code: this.territoryCode,
+                operators: this.operators,
             })
                 .then(() => {
                     this.$router.push('/liste-des-actions');
@@ -65,6 +71,31 @@ export default {
                     this.error = response.user_message;
                     this.fieldErrors = response.fields || {};
                 });
+        },
+
+        addOperator() {
+            this.operators.push({
+                id: null,
+                label: '',
+                contacts: [],
+            });
+        },
+
+        removeOperator(index) {
+            this.operators.splice(index, 1);
+        },
+
+        operatorAutocomplete(query) {
+            const promise = searchOperator(query);
+            const aborter = promise.abort;
+
+            const p = promise.then(results => results.map(operator => ({
+                id: operator.id,
+                label: operator.name,
+            })));
+            p.abort = aborter;
+
+            return p;
         },
     },
 };

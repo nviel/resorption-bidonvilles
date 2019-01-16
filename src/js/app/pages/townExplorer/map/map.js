@@ -1,4 +1,5 @@
-import Address from '#app/components/address/address.vue';
+import Autocomplete from '#app/components/autocomplete/autocomplete.vue';
+import { autocomplete } from '#helpers/addressHelper';
 import L from 'leaflet';
 import 'leaflet-providers';
 
@@ -6,7 +7,7 @@ const DEFAULT_VIEW = [46.7755829, 2.0497727];
 
 export default {
     components: {
-        Address,
+        Autocomplete,
     },
     props: {
         value: {
@@ -55,6 +56,7 @@ export default {
             positionMarker,
             townMarkers: [],
             address: this.value,
+            addressAutocomplete: autocomplete,
         };
     },
     computed: {

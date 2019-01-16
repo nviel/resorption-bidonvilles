@@ -1,5 +1,5 @@
 <div class="search__group">
-    <input type="text" :placeholder="placeholder" @keyup="onTyping" @keydown="onNavigation" @focus="onFocus" @blur="onBlur" v-model.trim="query" :autofocus="autofocus">
+    <input type="text" :placeholder="placeholder" @keyup="onTyping" @keydown="onNavigation" @focus="onFocus" @blur="onBlur" v-model.trim="query" :autofocus="autofocus" ref="input">
     <div v-if="suggestions.length" class="autocomplete">
         <p v-for="(suggestion, index) in suggestions" class="autocomplete-result" v-bind:class="{ active: index === indexOfHighlightedSuggestion }" @mousedown="onSuggestionClick(suggestion)">{{ suggestion.label }}</p>
     </div>

@@ -1,12 +1,12 @@
 <template lang="pug">
-    include address.pug
+    include autocomplete.pug
 </template>
 
 <script>
-import Component from './address.js';
+import Component from './autocomplete.js';
 export default Component;
 </script>
 
 <style lang="scss" scoped>
-@import './address.scss';
+@import './autocomplete.scss';
 </style>

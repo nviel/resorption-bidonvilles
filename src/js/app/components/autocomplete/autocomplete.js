@@ -1,5 +1,3 @@
-import { autocomplete } from '#helpers/addressHelper';
-
 /**
  * Delay before triggering an autocomplete, in milliseconds
  *
@@ -19,18 +17,31 @@ export default {
         value: Object,
         autofocus: Boolean,
         placeholder: String,
+        autocompleter: Function,
+        allowFreeValues: Boolean,
+        min: Number,
     },
     data() {
         return {
             pendingRequest: null,
             typingTimeout: null,
             suggestions: [],
-            coordinates: (this.value !== null && this.value.coordinates) || null,
-            query: (this.value !== null && this.value.label) || '',
+            selectedId: (this.value && this.value.id) || null,
+            query: (this.value && this.value.label) || '',
             previousQuery: '',
             focused: false,
             indexOfHighlightedSuggestion: null,
         };
+    },
+    computed: {
+        typingMin() {
+            const min = parseInt(this.min, 10);
+            if (Number.isNaN(min) || min <= 0) {
+                return TYPING_MIN;
+            }
+
+            return min;
+        },
     },
     mounted() {
         document.addEventListener('click', this.checkOutsideClick);
@@ -56,7 +67,7 @@ export default {
                 clearTimeout(this.typingTimeout);
             }
 
-            this.coordinates = null;
+            this.selectedId = null;
             this.$emit('input', null);
             this.setSuggestions([]);
             this.indexOfHighlightedSuggestion = null;
@@ -72,9 +83,16 @@ export default {
                 this.pendingRequest.abort();
             }
 
-            if (this.coordinates === null) {
-                this.query = '';
-                this.previousQuery = '';
+            if (this.selectedId === null) {
+                if (this.allowFreeValues === true) {
+                    this.$emit('input', {
+                        id: null,
+                        label: this.query,
+                    });
+                } else {
+                    this.query = '';
+                    this.previousQuery = '';
+                }
             }
 
             this.setSuggestions([]);
@@ -97,6 +115,7 @@ export default {
             } else if (event.keyCode === 13) { // key 'enter' (= select current suggestion)
                 if (this.indexOfHighlightedSuggestion !== null) {
                     this.onSelect(this.suggestions[this.indexOfHighlightedSuggestion]);
+                    this.$refs.input.blur();
                 }
             } else {
                 this.indexOfHighlightedSuggestion = null;
@@ -106,10 +125,10 @@ export default {
             this.onSelect(suggestion);
         },
         onSelect(value) {
-            const { label, coordinates } = value;
+            const { id, label } = value;
             this.$emit('input', value);
             this.setSuggestions([]);
-            this.coordinates = coordinates;
+            this.selectedId = id;
             this.query = label;
             this.previousQuery = label;
         },
@@ -118,11 +137,11 @@ export default {
                 this.pendingRequest.abort();
             }
 
-            if (this.query.length < TYPING_MIN || this.focused !== true) {
+            if (this.query.length < this.typingMin || this.focused !== true) {
                 return;
             }
 
-            this.pendingRequest = autocomplete(this.query);
+            this.pendingRequest = this.autocompleter(this.query);
             this.pendingRequest
                 .then((suggestions) => {
                     if (this.focused === true) {

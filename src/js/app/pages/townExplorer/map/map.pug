@@ -1,4 +1,4 @@
 <section>
-    <Address :placeholder="placeholder" :autofocus="autofocus" v-model="address" v-if="showAddress"></Address>
+    <Autocomplete :placeholder="placeholder" :autofocus="autofocus" :autocompleter="addressAutocomplete" v-model="address" v-if="showAddress"></Autocomplete>
     <div id="map"></div>
 </section>

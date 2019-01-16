@@ -56,7 +56,18 @@
 
                     <div class="panel">
                         <div class="panel__header">
-                            <h3>2. Périmètre de l'action</h3>
+                            <h3>2. Opérateurs de l'action</h3>
+                        </div>
+                        <div class="form__group">
+                            <ul>
+                                <li v-for="operator in action.operators">{{ operator.name }}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__header">
+                            <h3>3. Périmètre de l'action</h3>
                         </div>
                         <div class="form__group">
                             <p>
@@ -67,7 +78,7 @@
 
                     <div class="panel">
                         <div class="panel__header">
-                            <h3>3. Étapes de l'action</h3>
+                            <h3>4. Étapes de l'action</h3>
                         </div>
 
                         <div class="form__group">

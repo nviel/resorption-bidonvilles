@@ -48,6 +48,7 @@ function onAutocompleteLoad(success, failure) {
             removeDuplicates(features)
                 .filter(feature => (feature.properties && feature.properties.citycode))
                 .map(feature => ({
+                    id: feature.properties.citycode,
                     citycode: feature.properties.citycode,
                     city: feature.properties.city,
                     label: `${feature.properties.label}, ${feature.properties.context}`,

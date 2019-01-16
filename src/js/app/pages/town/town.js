@@ -118,6 +118,7 @@ export default {
 
             this.edit = {
                 address: {
+                    id: this.town.city.code,
                     city: this.town.city.name,
                     citycode: this.town.city.code,
                     label: this.town.address,

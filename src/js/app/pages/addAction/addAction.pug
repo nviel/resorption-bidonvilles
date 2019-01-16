@@ -57,7 +57,34 @@
 
             <div class="panel">
                 <div class="panel__header">
-                    <h3>2. Périmètre de l'action<h3>
+                    <div>
+                        <div class="panel__title"><h3>2. Opérateurs</h3></div>
+                        <div class="panel__actions">
+                            <button class="button" @click="addOperator">Associer un autre opérateur</button>
+                        </div>
+                    </div>
+                </div>
+
+                <p v-if="operators.length === 0">Aucun opérateur n'a été rattaché à cette action pour le moment.</p>
+
+                <div v-for="(operator, index) in operators">
+                        <div class="panel__header">
+                            <div>
+                                <div class="panel__title">
+                                    <Autocomplete placeholder="Saisissez ici le nom de l'opérateur" :min="2" :autofocus="false" v-model="operators[index]" :allow-free-values="true" :autocompleter="operatorAutocomplete"></Autocomplete>
+                                    <p v-if="operators[index].id === null && operators[index].label !== ''"><em>Attention, vous n'avez pas sélectionné un opérateur dans la liste, il s'agit donc d'un nouvel opérateur qui sera ajouté en base de données.</em></p>
+                                </div>
+                                <div class="panel__actions">
+                                    <button class="button" @click="removeOperator(index)">Retirer cet opérateur</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel__header">
+                    <h3>3. Périmètre de l'action<h3>
                 </div>
 
                 <div class="form__group">

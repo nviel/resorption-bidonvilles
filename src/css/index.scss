@@ -41,3 +41,11 @@ label.error.message {
     vertical-align: middle;
     margin-right: 10px;
 }
+
+.panel__header > div {
+    display: flex;
+}
+
+.panel__title {
+    flex-grow: 2;
+}
