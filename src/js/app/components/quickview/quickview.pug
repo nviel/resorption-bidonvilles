@@ -1,14 +1,14 @@
 <div v-bind:class="{ active }">
     <div class="shadow"></div>
 
-    <div class="quickview" ref="quickviewPanel">
+    <simplebar class="quickview" ref="quickviewPanel" data-simplebar-auto-hide="false">
         <header class="quickview-header" v-if="town">
             <div class="quickview-actions">
                 <button type="button" class="actionButton" @click="showTown">Modifier le site</button>
                 <a href="#" @click="$emit('outside-click')"><svg class="icon icon-cross"><use xlink:href="#round-cross"></use></svg></a>
             </div>
             <h1 class="quickview-title"><a @click="showTown">Site de {{ town.city.name }}</a></h1>
-            <h2 class="quickview-subtitle">{{ town.address }}</h2>
+            <h2 class="quickview-subtitle">{{ town.address.split(/[0-9]{5}/)[0].replace(/[0-9]/g, '').replace(/,/g, ' ').replace(/\s{2,}/g, ' ') }}</h2>
         </header>
 
         <section v-if="town">
@@ -29,7 +29,10 @@
                     </tr>
                     <tr>
                         <th>Origines :</th>
-                        <td>{{ town.socialOrigins.length > 0 ? town.socialOrigins.map(origin => (origin.label)).join(', ') : 'inconnu' }}</td>
+                        <td>{{ town.socialOrigins.length > 0 ? '' : 'inconnu' }}</td>
+                    </tr>
+                    <tr v-for="socialOrigin in town.socialOrigins">
+                        <td colspan="2">{{ socialOrigin.label }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -54,5 +57,5 @@
                 </tbody>
             </table>
         </section>
-    </div>
+    </simplebar>
 </div>

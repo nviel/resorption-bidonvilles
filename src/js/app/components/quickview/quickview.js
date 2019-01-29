@@ -1,4 +1,9 @@
+import simplebar from 'simplebar-vue';
+
 export default {
+    components: {
+        simplebar,
+    },
     props: {
         town: Object,
         origin: Event, // this event is the one that caused that quick-view to appear
@@ -26,7 +31,7 @@ export default {
             }
 
             // if the click was outside ourselves, share the info
-            if (!this.$refs.quickviewPanel.contains(event.target)) {
+            if (!this.$refs.quickviewPanel.$el.contains(event.target)) {
                 this.$emit('outside-click', event);
             }
         },

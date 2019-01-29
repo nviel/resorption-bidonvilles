@@ -1,6 +1,11 @@
 import Address from '#app/components/address/address.vue';
 import L from 'leaflet';
 import 'leaflet-providers';
+
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import 'leaflet.markercluster/dist/leaflet.markercluster';
+
 // eslint-disable-next-line
 import blackMarker from '/img/markers/black.svg';
 // eslint-disable-next-line
@@ -60,7 +65,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: 'Centrez la carte sur un point précis en tapant ici le nom d\'une commune, département, région, ...',
+            default: 'Recherchez un lieu en saisissant une adresse',
         },
         showAddress: {
             type: Boolean,
@@ -75,6 +80,7 @@ export default {
 
         return {
             map: null,
+            markersGroup: null,
             positionMarker,
             townMarkers: [],
             address: this.value,
@@ -133,6 +139,7 @@ export default {
             this.map = L.map('map', {
                 layers: Object.values(layers),
                 scrollWheelZoom: false,
+                zoomDelta: 2.5,
             });
             this.map.zoomControl.setPosition('bottomright');
             L.control.layers(layers, undefined, { collapsed: false }).addTo(this.map);
@@ -143,6 +150,10 @@ export default {
             } else {
                 this.centerMap(center, zoom);
             }
+
+            this.markersGroup = L.markerClusterGroup();
+            this.map.addLayer(this.markersGroup);
+
             this.map.addEventListener('click', (event) => {
                 const { lat, lng } = event.latlng;
                 this.positionMarker.setLatLng([lat, lng]);
@@ -157,16 +168,18 @@ export default {
         },
         addTownMarker(town) {
             const { latitude, longitude } = town;
+
             const marker = L.marker([latitude, longitude], {
                 title: town.address,
                 icon: ICONS[town.priority || 3],
             });
-            marker.addTo(this.map);
+            this.markersGroup.addLayer(marker);
+
             marker.on('click', this.handleTownMarkerClick.bind(this, town));
             this.townMarkers.push(marker);
         },
         removeAllTownMarkers() {
-            this.townMarkers.forEach(marker => marker.remove());
+            this.markersGroup.clearLayers();
             this.townMarkers = [];
         },
         syncTownMarkers() {

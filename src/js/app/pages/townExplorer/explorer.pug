@@ -20,7 +20,7 @@
             <div class="filterGroup">
                 <aside><img src="/img/people.svg" width="50" alt="" /></aside>
                 <main>
-                    <h1>Résultats sous forme de :</h1>
+                    <h1>Résultats sous forme de</h1>
                     <div v-for="(option, index) in viewTypes">
                         <input v-model="currentTab" type="radio" :id="'viewType-' + index" name="viewTypes" :value="option.value">
                         <label :for="'viewType-' + index" class="label-inline">{{ option.label }}</label><br/>
@@ -28,7 +28,7 @@
                 </main>
             </div>
 
-            <FilterGroup v-for="filterGroup in filters" :id="filterGroup.id" :icon="filterGroup.icon" :label="filterGroup.label" :options="filterGroup.options"></FilterGroup>
+            <FilterGroup v-for="filterGroup in filters" :id="filterGroup.id" :icon="filterGroup.icon" :label="filterGroup.label" :options="filterGroup.options" :opened="filterGroup.opened"></FilterGroup>
         </simplebar>
 
         //- content

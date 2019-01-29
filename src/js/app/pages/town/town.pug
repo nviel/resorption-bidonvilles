@@ -32,7 +32,7 @@
                 <aside class="side-menu">
                     <ul>
                         <li><a v-bind:class="{ active: view === 'details' }" @click="setView('details')">Caractéristiques du site</a></li>
-                        <li><a v-bind:class="{ active: view === 'actions' }" @click="setView('actions')">Actions sur le site</a></li>
+                        //- <li><a v-bind:class="{ active: view === 'actions' }" @click="setView('actions')">Actions sur le site</a></li>
                         <li><a v-bind:class="{ active: view === 'comments' }" @click="setView('comments')">Commentaires sur le site</a></li>
                         <li v-if="town.status === 'open' && mode !== 'edit'" class="side-menu-button"><button @click="setEditMode" class="button secondary">Déclarer la fermeture du site</button></li>
                         <li v-if="town.status === 'open' && mode !== 'edit'" class="side-menu-button"><button @click="setEditMode" class="button secondary">Modifier le site</button></li>

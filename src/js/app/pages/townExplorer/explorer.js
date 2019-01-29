@@ -49,6 +49,7 @@ export default {
                     label: 'Types de site',
                     id: 'fieldType',
                     options: [],
+                    opened: true,
                 },
                 {
                     icon: iconPeople,
@@ -63,7 +64,7 @@ export default {
                 },
                 {
                     icon: iconJustice,
-                    label: 'Procédure judiciaire en cours',
+                    label: 'Procédure judiciaire',
                     id: 'justice',
                     options: [
                         { value: 'no', label: 'Non', checked: true },

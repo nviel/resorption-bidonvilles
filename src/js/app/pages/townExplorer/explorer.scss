@@ -25,6 +25,14 @@
             #map {
                 height: 100%;
             }
+
+            .search__group {
+                z-index: 1000;
+                left: 15px;
+                top: 11px;
+                right: 150px;
+                position: absolute;
+            }
         }
 
         .table {
