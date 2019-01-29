@@ -1,4 +1,5 @@
 .shadow {
+    visibility: hidden;
     z-index: 1100;
     position: fixed;
     top: 0;
@@ -6,75 +7,129 @@
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: opacity 0.4s linear;
+    -webkit-transition: opacity 0.4s linear;
 }
 
 .quickview {
     z-index: 1101;
     position: fixed;
-    top: 0;
-    right: 0;
-    width: 500px;
+    top: 71px;
+    right: -300px;
+    width: 300px;
     height: 100%;
-    border-left: 1px solid #c9d3df;
+    color: #182B51;
+    transition: right 0.4s ease-in-out;
+    -webkit-transition: right 0.4s ease-in-out;
     background: #ffffff;
+    border-left: 1px solid #c9d3df;
+
+    .quickview-header {
+        padding: 15px 0 15px 25px;
+        background: #F4F8FC;
+
+        .quickview-title {
+            margin: 0;
+            font-weight: normal;
+            font-size: 1.3rem;
+            letter-spacing: 0.05em;
+
+            > a {
+                color: #182B51;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .quickview-subtitle {
+            margin: 0;
+            font-weight: normal;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .quickview-actions {
+            margin-bottom: 10px;
+            padding-bottom: 15px;
+            padding-right: 15px;
+            text-align: right;
+            border-bottom: 1px solid #E1E4E8;
+
+            .icon {
+                width: 20px;
+                height: 20px;
+                color: #182B51;
+                vertical-align: middle;
+            }
+        }
+    }
 
     > section {
+        margin: 0;
+        padding: 30px 25px;
+        border-top: 1px solid #E1E4E8;
+
+        &.even {
+            background: #F4F8FC;
+        }
+
         > header {
-            font-weight: bold;
+            padding-bottom: 15px;
+
+            > h1 {
+                margin: 0;
+                padding: 0;
+                font-size: 1rem;
+                font-weight: normal;
+                color: #006be6;
+            }
         }
 
-        > p {
-            padding-left: 20px;
-            padding-right: 20px;
+        > table {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            vertical-align: middle;
+            border-collapse: collapse;
+
+            tr {
+                height: 30px;
+            }
+
+            th {
+                text-align: left;
+                font-weight: normal;
+                text-transform: uppercase;
+                font-size: 0.80em;
+                color: #53657d;
+            }
+
+            td {
+                text-align: right;
+            }
         }
+    }
+
+    .quickview-footer {
+        position: absolute;
+        bottom: 0;
+        padding: 0 0 50px;
+        width: 100%;
+        text-align: center;
     }
 }
 
-.quickview-header {
-    padding: 15px 0 20px 20px;
-    color: #ffffff;
-    background: #003b80;
-}
-
-.quickview-footer {
-    position: absolute;
-    bottom: 0;
-    padding: 0 0 50px;
-    width: 100%;
-    text-align: center;
-}
-
-.quickview-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-
-    .icon {
-        width: 40px;
-        height: 40px;
-        color: rgba(255,255,255,0.7);
+.active {
+    .shadow {
+        visibility: visible;
+        opacity: 1;
     }
-}
 
-.quickview-title {
-    margin: 0;
-    font-size: 1.8rem;
-
-    > a {
-        color: white;
-        text-decoration: underline;
-
-        &:hover {
-            text-decoration: none;
-        }
+    .quickview {
+        right: 0;
     }
-}
-
-.quickview-subtitle {
-    margin: 0;
-    font-size: 1.3rem;
-}
-
-.action {
-    cursor: pointer;
 }

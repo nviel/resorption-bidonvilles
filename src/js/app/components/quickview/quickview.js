@@ -3,6 +3,11 @@ export default {
         town: Object,
         origin: Event, // this event is the one that caused that quick-view to appear
     },
+    computed: {
+        active() {
+            return !!this.town;
+        },
+    },
     mounted() {
         document.addEventListener('click', this.checkOutsideClick);
     },
@@ -11,6 +16,10 @@ export default {
     },
     methods: {
         checkOutsideClick(event) {
+            if (!this.town) {
+                return;
+            }
+
             // ignore the origin event
             if (event === this.origin) {
                 return;
@@ -23,9 +32,6 @@ export default {
         },
         showTown() {
             this.$router.push(`/site/${this.town.id}`);
-        },
-        showAction(id) {
-            this.$router.push(`/action/${id}`);
         },
     },
 };
