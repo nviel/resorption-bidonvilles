@@ -1,6 +1,6 @@
 import NavBar from '#app/layouts/navbar/navbar.vue';
 import FilterGroup from './filterGroup/filterGroup.vue';
-import Map from './map/map.vue';
+import Map from '#app/components/map/map.vue';
 import { VueGoodTable as Table } from 'vue-good-table';
 import Quickview from '#app/components/quickview/quickview.vue';
 import { all as fetchAll } from '#helpers/api/town';

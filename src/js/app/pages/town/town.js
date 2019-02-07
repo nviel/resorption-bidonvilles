@@ -1,5 +1,5 @@
 import NavBar from '#app/layouts/navbar/navbar.vue';
-import Map from '#app/pages/townExplorer/map/map.vue';
+import Map from '#app/components/map/map.vue';
 import {
     get, edit, destroy, addComment,
 } from '#helpers/api/town';
