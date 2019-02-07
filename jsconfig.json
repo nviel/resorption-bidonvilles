@@ -3,7 +3,9 @@
         "baseUrl": ".",
         "paths": {
             "#helpers/*": [ "./src/js/helpers/*" ],
-            "#app/*": [ "./src/js/app/*" ]
+            "#app/*": [ "./src/js/app/*" ],
+            "#test/*": [ "./test/*" ],
+            "test-map": "./dist_test/map.js"
         }
     },
     "exclude": [

@@ -1,5 +1,16 @@
 {
     "extends": "airbnb-base",
+    "overrides": [
+        {
+            "files": ["**/*.spec.js"],
+            "env": {
+                "mocha": true
+            },
+            "rules": {
+                "no-unused-expressions": "off"
+            }
+        }
+    ],
     "rules": {
         "indent": [ "error", 4 ],
         "import/no-extraneous-dependencies": false,

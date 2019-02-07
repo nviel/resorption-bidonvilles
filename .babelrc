@@ -1,9 +1,16 @@
 {
-    "presets": [
+    "plugins": [
         [
-            "@babel/preset-env",
+            "module-resolver",
             {
-                "useBuiltIns": "entry"
+                "root": ["./"],
+                "alias": {
+                    "#helpers": "./src/js/helpers",
+                    "#app": "./src/js/app",
+                    "vue": "./node_modules/vue/dist/vue.common.js",
+                    "#test": [ "./test" ],
+                    "test-map": "./dist_test/map.js"
+                }
             }
         ]
     ]
