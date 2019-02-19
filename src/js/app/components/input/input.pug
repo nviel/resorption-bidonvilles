@@ -1,0 +1,22 @@
+<div>
+    //- textfield
+    <input v-if="type === 'text'" type="text" v-model="value" :placeholder="placeholder" />
+
+    //- radio field
+    <div v-if="type === 'radio'" v-for="(choice, index) in choices">
+        <input type="radio" :id="`input${id}-${index}`" :value="choice.value" v-model="value" />
+        <label :for="`input${id}-${index}`" class="label-inline">{{ choice.label }}</label>
+    </div>
+
+    //- multi-checkbox field
+    <div v-if="type === 'multicheckbox'" v-for="(choice, index) in choices">
+        <input type="checkbox" :id="`input${id}-${index}`" :value="choice.value" v-model="value" />
+        <label :for="`input${id}-${index}`" class="label-inline">{{ choice.label }}</label>
+    </div>
+
+    //- date field
+    <Datepicker v-if="type === 'date'" v-model="value" v-bind="customProperties" :language="datepickerLanguage" :monday-first="true" :full-month-name="true" :format="'dd MMMM yyyy'" :clear-button="true"></Datepicker>
+
+    //- address field
+    <Address v-if="type === 'address'" :placeholder="placeholder" v-model="value" v-bind="customProperties"></Address>
+</div>

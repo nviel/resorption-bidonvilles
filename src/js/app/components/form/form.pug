@@ -1,0 +1,37 @@
+<section class="section">
+    <div class="container">
+        <h1>{{ title }}</h1>
+
+        <div class="breadcrumbs">
+            <ul>
+                <li v-for="(step, index) in steps" class="breadcrumbs-step" :class="{ done: currentStepIndex > index, active: currentStepIndex === index, error: doesStepContainErrors(index) }" @click="displayStep(index)">
+                    <span>{{ index + 1 }}</span> {{ step.title }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="panel">
+            <div class="form__group" v-for="(input, index) in currentStep.inputs" :key="input.name">
+                <div v-if="!input.isVisible || input.isVisible(values) === true">
+                    <label v-bind:class="{ error: input.errors }" class="form-label">{{ input.label }}<sup v-if="input.mandatory !== false" class="form-star "> (champ obligatoire)</sup></label>
+                    <p v-if="input.description">{{ input.description }}</p>
+
+                    <p class="error" v-if="input.errors">
+                        <ul>
+                            <li v-for="error in input.errors">{{ error }}</li>
+                        </ul>
+                    </p>
+
+                    <Input v-model="values[input.name]" v-bind="input" />
+                </div>
+            </div>
+        </div>
+
+        <div class="notification error" v-if="error">{{ error }}.</div>
+
+        <div class="form__group">
+            <button class="button large" @click="stepBack()" v-if="currentStepIndex > 0">Étape précédente</button>
+            <button class="button large" @click="submit">{{ labelOfTheSubmitButton }}</button>
+        </div>
+    </div>
+</section>

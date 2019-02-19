@@ -51,7 +51,7 @@ function onAutocompleteLoad(success, failure) {
                     citycode: feature.properties.citycode,
                     city: feature.properties.city,
                     label: `${feature.properties.label}, ${feature.properties.context}`,
-                    coordinates: feature.geometry.coordinates,
+                    coordinates: feature.geometry.coordinates.reverse(),
                 })),
         );
     } catch (error) {

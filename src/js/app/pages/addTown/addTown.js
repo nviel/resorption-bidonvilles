@@ -1,35 +1,138 @@
 import NavBar from '#app/layouts/navbar/navbar.vue';
 import Map from '#app/components/map/map.vue';
-import { get } from '#helpers/api/config';
+import { get as getAppConfig } from '#helpers/api/config';
 import Datepicker from 'vuejs-datepicker';
 import { fr } from 'vuejs-datepicker/dist/locale';
 import { add } from '#helpers/api/town';
+import Form from '#app/components/form/form.vue';
 
 export default {
     components: {
         NavBar,
         Map,
         Datepicker,
+        Form,
     },
     data() {
+        const appConfig = getAppConfig();
+
         return {
             steps: [
                 {
-                    id: 'geography',
-                    label: 'Caractéristiques',
+                    title: 'Localisation géographique',
+                    inputs: [
+                        {
+                            mandatory: true,
+                            name: 'address',
+                            type: 'address',
+                            label: 'Adresse',
+                            description: 'Veuillez saisir le début de l\'adresse du site dans le champ ci-dessous, puis sélectionner l\'adresse exacte dans la liste qui vous est proposée. Une fois cela fait, vous pourrez préciser la situation exacte du site en déplaçant le point sur la carte.',
+                            customProperties: {
+                                useMap: true,
+                            },
+                        },
+                        {
+                            mandatory: false,
+                            name: 'detailed_address',
+                            type: 'text',
+                            label: 'Informations d\'accès',
+                            description: 'Veuillez saisir ici toutes les informations qui, en plus de l\'adresse, peuvent être utiles pour l\'accès au site.',
+                        },
+                    ],
                 },
                 {
-                    id: 'demography',
-                    label: 'Démographie',
+                    title: 'Caractéristiques du site',
+                    inputs: [
+                        {
+                            mandatory: true,
+                            name: 'priority',
+                            type: 'radio',
+                            label: 'Niveau de priorité du site',
+                            description: 'Le niveau 1 étant le plus prioritaire',
+                            choices: [
+                                { label: '1', value: 1 },
+                                { label: '2', value: 2 },
+                                { label: '3', value: 3 },
+                                { label: '4', value: 4 },
+                            ],
+                        },
+                        {
+                            mandatory: false,
+                            name: 'declared_at',
+                            type: 'date',
+                            label: 'Date de signalement',
+                            customProperties: {
+                                disabledDates: {
+                                    from: new Date(),
+                                },
+                            },
+                        },
+                        {
+                            mandatory: false,
+                            name: 'built_at',
+                            type: 'date',
+                            label: 'Date d\'installation',
+                            customProperties: {
+                                disabledDates: {
+                                    from: new Date(),
+                                },
+                            },
+                        },
+                        {
+                            mandatory: true,
+                            name: 'field_type',
+                            type: 'radio',
+                            label: 'Type de site',
+                            choices: appConfig.field_types.map(fieldType => ({ label: fieldType.label, value: fieldType.id })),
+                        },
+                        {
+                            mandatory: true,
+                            name: 'owner_type',
+                            type: 'radio',
+                            label: 'Type de propriétaire',
+                            choices: appConfig.owner_types.map(ownerType => ({ label: ownerType.label, value: ownerType.id })),
+                        },
+                    ],
                 },
                 {
-                    id: 'life_conditions',
-                    label: 'Conditions de vie',
+                    title: 'Démographie',
+                    inputs: [
+                        {
+                            mandatory: false,
+                            name: 'population_total',
+                            type: 'text',
+                            label: 'Nombre de personnes',
+                            description: 'Vous pouvez ignorer ce champ si cette information est inconnue.',
+                        },
+                        {
+                            mandatory: false,
+                            name: 'population_couples',
+                            type: 'text',
+                            label: 'Nombre de ménages',
+                            description: 'Vous pouvez ignorer ce champ si cette information est inconnue.',
+                        },
+                        {
+                            mandatory: false,
+                            name: 'population_minors',
+                            type: 'text',
+                            label: 'Nombre de mineurs',
+                            description: 'Vous pouvez ignorer ce champ si cette information est inconnue.',
+                        },
+                        {
+                            mandatory: false,
+                            name: 'social_origins',
+                            type: 'multicheckbox',
+                            label: 'Origine des occupants',
+                            description: 'Vous pouvez ignorer ce champ si cette information est inconnue.',
+                            choices: appConfig.social_origins.map(fieldType => ({ label: fieldType.label, value: fieldType.id })),
+                        },
+                    ],
                 },
             ],
-            fieldTypes: get().field_types,
-            ownerTypes: get().owner_types,
-            socialOrigins: get().social_origins,
+            submitter() {},
+            fieldTypes: getAppConfig().field_types,
+            ownerTypes: getAppConfig().owner_types,
+            socialOrigins: getAppConfig().social_origins,
             dateLanguage: fr,
             address: {},
             priority: 3,

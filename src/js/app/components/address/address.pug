@@ -1,9 +1,17 @@
-<div class="search__group">
-    <input type="text" :placeholder="placeholder" @keyup="onTyping" @keydown="onNavigation" @focus="onFocus" @blur="onBlur" v-model.trim="query" :autofocus="autofocus">
-    <div v-if="suggestions.length" class="autocomplete">
-        <p v-for="(suggestion, index) in suggestions" class="autocomplete-result" v-bind:class="{ active: index === indexOfHighlightedSuggestion }" @mousedown="onSuggestionClick(suggestion)">{{ suggestion.label }}</p>
+<div>
+    <div class="search__group">
+        <input type="text" :placeholder="placeholder" v-model.trim="label" @keyup="onNewLabel" @keydown="handleNavigationThroughSuggestions" @blur="onBlur">
+        <div v-if="suggestions.length" class="autocomplete">
+            <p v-for="(suggestion, index) in suggestions" class="autocomplete-result" v-bind:class="{ active: index === indexOfHighlightedSuggestion }" @mousedown="onSuggestionClick(suggestion)">{{ suggestion.label }}</p>
+        </div>
+        <button class="overlay-button" aria-label="Recherche">
+            <svg class="icon icon-search"><use xlink:href="#magnifier"></use></svg>
+        </button>
     </div>
-    <button class="overlay-button" aria-label="Recherche">
-        <svg class="icon icon-search"><use xlink:href="#magnifier"></use></svg>
-    </button>
+
+    <div v-if="useMap" style="position: relative;">
+        <div class="map-overlay" v-if="!showMap"><p>Veuillez saisir une adresse dans la barre de recherche avant d'avoir accès à la carte.</p></div>
+        <div class="map-overlay" v-if="showMap && showMapInstructions"><p>Cliquez sur la carte pour préciser la localisation du site<br/><button class="button" @click="showMapInstructions = false   ">J'ai compris</button></p></div>
+        <Map :use-tracker="true" v-model="coordinates" :default-view="mapView"></Map>
+    </div>
 </div>
