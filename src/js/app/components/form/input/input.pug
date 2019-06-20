@@ -4,7 +4,7 @@
 
     <div class="notification error" v-if="errors.length > 0">
         <ul v-for="error in errors">
-            <li>{{ error }}</li>
+            <li>{{ Array.isArray(error) ? error.join(', ') : error }}</li>
         </ul>
     </div>
 

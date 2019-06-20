@@ -19,14 +19,21 @@ const ERRORS = {
  * @param {Function} failure Failure callback
  */
 function handleRequestResponse(success, failure) {
+    const genericError = {
+        user_message: 'Une erreur inconnue est survenue',
+        developer_message: 'Failed to parsed the server\'s response',
+    };
+
     let response = null;
     try {
         response = JSON.parse(this.responseText);
     } catch (error) {
-        failure({
-            user_message: 'Une erreur inconnue est survenue',
-            developer_message: 'Failed to parsed the server\'s response',
-        });
+        failure(genericError);
+        return;
+    }
+
+    if (response.success === false) {
+        failure(response.response || genericError);
         return;
     }
 
