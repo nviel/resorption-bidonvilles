@@ -15,7 +15,7 @@ export default {
 
         const data = {
             formData: {
-                departement,
+                departement: departement || null,
             },
         };
 
