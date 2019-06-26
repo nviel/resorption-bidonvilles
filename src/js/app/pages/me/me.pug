@@ -39,16 +39,6 @@
                 </div>
 
                 <div class="form__group">
-                    <label for="company" v-bind:class="{ error: fieldErrors.company }">Nom de la structure pour laquelle vous travaillez :</label>
-                    <p class="error" v-if="fieldErrors.company">
-                        <ul>
-                            <li v-for="error in fieldErrors.company">{{ error }}</li>
-                        </ul>
-                    </p>
-                    <input type="text" id="company" v-model.lazy="company" :readonly="loading">
-                </div>
-
-                <div class="form__group">
                     <label for="password" v-bind:class="{ error: fieldErrors.password }">Nouveau mot de passe :</label>
                     <p>Laissez ce champ vide si vous souhaitez conserver votre mot de passe actuel</p>
                     <p class="error" v-if="fieldErrors.password">

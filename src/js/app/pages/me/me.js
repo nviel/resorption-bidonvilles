@@ -12,7 +12,6 @@ export default {
             loading: false,
             firstName: '',
             lastName: '',
-            company: '',
             password: '',
             errors: undefined,
             fieldErrors: {},
@@ -38,7 +37,6 @@ export default {
                 .then((data) => {
                     this.firstName = data.first_name;
                     this.lastName = data.last_name;
-                    this.company = data.company;
                     this.password = '';
                 });
         },
@@ -50,7 +48,6 @@ export default {
             edit({
                 first_name: this.firstName,
                 last_name: this.lastName,
-                company: this.company,
                 password: this.password !== '' ? this.password : null,
             })
                 .then(() => {

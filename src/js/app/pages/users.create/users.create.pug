@@ -2,5 +2,16 @@
     <NavBar></NavBar>
     <ActivationLinkModal v-if="activationLink" @close="onModalClose" :link="activationLink"></ActivationLinkModal>
 
-    <Form v-bind="formDefinition" @complete="onComplete"></Form>
+    <div v-if="status === 'loaded'">
+        <Form v-bind="formDefinition" @complete="onComplete"></Form>
+    </div>
+
+    <div v-if="status === 'error'" class="notification full-width">
+        <img src="/img/spinner_dark.svg" width="20" class="spinner" />
+        <span>Chargement des données en cours...</span>
+    </div>
+
+    <div v-if="status !== 'error' && status  !== 'loaded'" class="notification full-width">
+        <span>{{ error }}. <a href="#" @click="load">Réessayer ?</a></span>
+    </div>
 </div>

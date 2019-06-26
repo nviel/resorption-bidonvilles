@@ -1,5 +1,6 @@
 import { get as getConfig } from '#helpers/api/config';
 import { create } from '#helpers/api/user';
+import { list } from '#helpers/api/organization';
 import NavBar from '#app/layouts/navbar/navbar.vue';
 import ActivationLinkModal from '#app/layouts/activationLink/activationLink.vue';
 import Form from '#app/components/form/form.vue';
@@ -12,9 +13,12 @@ export default {
     },
 
     data() {
-        const { roles, departements } = getConfig();
+        const { roles } = getConfig();
 
         return {
+            status: null,
+            error: null,
+
             /**
              * Form definition
              */
@@ -51,19 +55,11 @@ export default {
                             {
                                 title: 'Structure d\'appartenance',
                                 inputs: {
-                                    company: {
-                                        type: 'text',
+                                    organization: {
+                                        type: 'select',
                                         label: 'Structure',
                                         mandatory: true,
-                                    },
-                                    departement: {
-                                        type: 'select',
-                                        label: 'Département de rattachement',
-                                        mandatory: true,
-                                        options: departements.map(({ code, name }) => ({
-                                            value: code,
-                                            label: `${code} - ${name}`,
-                                        })),
+                                        options: [],
                                     },
                                 },
                             },
@@ -109,7 +105,36 @@ export default {
         };
     },
 
+    mounted() {
+        this.load();
+    },
+
     methods: {
+        /**
+         *
+         */
+        load() {
+            if (this.status === 'loaded' || this.status === 'loading') {
+                return;
+            }
+
+            this.status = 'loading';
+            this.error = null;
+
+            list()
+                .then((organizations) => {
+                    this.status = 'loaded';
+                    this.formDefinition.steps[0].sections[1].inputs.organization.options = organizations.map(({ organization_id: id, name }) => ({
+                        id,
+                        name,
+                    }));
+                })
+                .catch(({ user_message: userMessage }) => {
+                    this.status = 'error';
+                    this.error = userMessage;
+                });
+        },
+
         /**
          *
          */

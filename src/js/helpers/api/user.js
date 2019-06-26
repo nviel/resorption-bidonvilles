@@ -163,6 +163,6 @@ export function activate(userId, data) {
  * @typedef {Object} User_Data
  * @property {string} first_name
  * @property {string} last_name
- * @property {string} company
+ * @property {Object} organization
  * @property {string} [password]
  */
