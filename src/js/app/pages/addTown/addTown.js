@@ -99,6 +99,14 @@ export default {
                                         label: 'Type de propriétaire',
                                         mandatory: true,
                                     },
+                                    owner: {
+                                        type: 'text',
+                                        mandatory: false,
+                                        label: 'Identité du propriétaire',
+                                        condition({ ownerType }) {
+                                            return ownerType && ownerTypes.find(({ id }) => id === ownerType).label !== 'Inconnu';
+                                        },
+                                    },
                                 },
                             },
                             {
