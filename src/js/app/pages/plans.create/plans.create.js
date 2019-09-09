@@ -3,6 +3,7 @@ import Form from '#app/components/form/form.vue';
 import { get as getConfig } from '#helpers/api/config';
 import { create } from '#helpers/api/plan';
 import { search } from '#helpers/api/operator';
+import { open } from '#helpers/tabHelper';
 
 export default {
     components: {
@@ -85,7 +86,7 @@ export default {
                                         float: true,
                                         createNew: () => {
                                             const routerData = this.$router.resolve('/nouvel-operateur');
-                                            window.open(routerData.href, '__blank');
+                                            open(routerData.href);
                                         },
                                     },
                                     label: 'Opérateur',
