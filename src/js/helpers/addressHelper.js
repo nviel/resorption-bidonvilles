@@ -89,7 +89,7 @@ export function autocomplete(strSearch, limit = 5) {
             queries.push(`limit=${parsedLimit}`);
         }
 
-        xhr.open('GET', `https://api-adresse.data.gouv.fr/search/?${queries.join('&')}`);
+        xhr.open('GET', `https://ban.addok.xyz/search/?${queries.join('&')}`);
         xhr.onload = onAutocompleteLoad.bind(xhr, success, failure);
         xhr.onerror = failure;
         xhr.ontimeout = failure;
