@@ -59,7 +59,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.22",
         "@fortawesome/free-solid-svg-icons": "^5.10.2",
         "@fortawesome/vue-fontawesome": "^0.1.6",
-        "@openfonts/fira-code_all": "^1.44.0",
+        "@openfonts/fira-code_all": "^1.44.2",
         "leaflet.markercluster": "^1.4.1",
         "simplebar-vue": "^0.1.4",
         "vue-good-table": "^2.16.0"
