@@ -54,7 +54,7 @@ export default {
         },
         download() {
             const { code, type } = this.location.data;
-            let url = `${process.env.API_URL}/towns/export?locationType=${encodeURIComponent(type)}&locationCode=${encodeURIComponent(code)}&closedTowns=${this.closedTowns ? '1' : '0'}`;
+            let url = `${window._env_.API_URL}/towns/export?locationType=${encodeURIComponent(type)}&locationCode=${encodeURIComponent(code)}&closedTowns=${this.closedTowns ? '1' : '0'}`;
 
             const options = this.availableOptions.map(({ id }) => id).filter(id => this.options[id]);
             if (options.length > 0) {

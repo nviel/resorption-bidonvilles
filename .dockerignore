@@ -1,0 +1,12 @@
+.DS_Store
+.cache
+.dockerignore
+.eslintrc
+.git
+.gitignore
+LICENSE
+README.md
+Dockerfile*
+docker-compose*
+jsconfig.json
+node_modules

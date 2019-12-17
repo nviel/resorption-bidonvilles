@@ -39,19 +39,19 @@ function handleRequestResponse(success, failure) {
 
     if (this.status !== 200) {
         switch (response && response.error && response.error.code) {
-        // handle generic errors
-        case ERRORS.MISSING_TOKEN:
-        case ERRORS.EXPIRED_OR_INVALID_TOKEN:
-            logout();
-            router.push('/');
-            break;
+            // handle generic errors
+            case ERRORS.MISSING_TOKEN:
+            case ERRORS.EXPIRED_OR_INVALID_TOKEN:
+                logout();
+                router.push('/');
+                break;
 
             // for everything else, let the current component decide what's best
-        default:
-            failure((response && response.error) || {
-                user_message: 'Une erreur inconnue est survenue',
-                developer_message: 'The server responded with an error status but did not provide error details',
-            });
+            default:
+                failure((response && response.error) || {
+                    user_message: 'Une erreur inconnue est survenue',
+                    developer_message: 'The server responded with an error status but did not provide error details',
+                });
         }
 
         return;
@@ -87,7 +87,7 @@ function handleRequestFailure(callback) {
 function request(method, url, data, headers = {}) {
     const xhr = new XMLHttpRequest();
     const promise = new Promise((success, failure) => {
-        xhr.open(method, `${process.env.API_URL}${url}`);
+        xhr.open(method, `${window._env_.API_URL}${url}`);
 
         Object.keys(headers).forEach((name) => {
             xhr.setRequestHeader(name, headers[name]);
