@@ -11,6 +11,7 @@ const { createExport } = require('#server/utils/excel');
 const { send: sendMail, PRESERVE_RECIPIENT } = require('#server/services/mailService');
 const { triggerShantytownCloseAlert, triggerShantytownCreationAlert } = require('#server/utils/slack');
 const { slack: slackConfig } = require('#server/config');
+const { can } = require('#server/services/permissionService');
 
 function fromGeoLevelToTableName(geoLevel) {
     switch (geoLevel) {
@@ -488,20 +489,6 @@ module.exports = (models) => {
         },
 
         async export(req, res, next) {
-            function isLocationAllowed(user, location) {
-                if (user.permissions.shantytown.export.geographic_level === 'nation') {
-                    return true;
-                }
-
-                if (user.organization.location.type === 'nation') {
-                    return true;
-                }
-
-                return location[user.organization.location.type]
-                    && user.organization.location[user.organization.location.type]
-                    && user.organization.location[user.organization.location.type].code === location[user.organization.location.type].code;
-            }
-
             if (!Object.prototype.hasOwnProperty.call(req.query, 'locationType')
                 || !Object.prototype.hasOwnProperty.call(req.query, 'locationCode')) {
                 return res.status(400).send({
@@ -531,7 +518,7 @@ module.exports = (models) => {
                 next(error);
             }
 
-            if (!isLocationAllowed(req.user, location)) {
+            if (!can(req.user).do('export', 'shantytown').on(location)) {
                 return res.status(400).send({
                     success: false,
                     response: {
